@@ -6,13 +6,20 @@ const pokeImgElement = document.querySelector('[poke-img]');
 const notificationsElement = document.querySelector('[data-notifications]');
 const toastElement = document.querySelector('[data-toast]');
 
+const prevButton = document.querySelector('[btn-prev]');
+const nextButton = document.querySelector('[btn-next]');
 
 // API
 const requestURL = new URL('https://pokeapi.co/');
 const prefixURL = 'api/v2/';
 
+const lastPokemonIndex = async function() { } 
+
 // event listeners
 searchForm.addEventListener('submit', handleFormSubmit );
+prevButton.addEventListener('click', prevPokemon );
+nextButton.addEventListener('click', nextPokemon );
+
 
 async function handleFormSubmit(event) {
     event.preventDefault();
@@ -20,7 +27,7 @@ async function handleFormSubmit(event) {
     clearNotifications();
 
     const form = Object.fromEntries(new FormData(event.target));
-    const pokemon = await getPokemonByName(form.pokemon);
+    const pokemon = await getPokemonByName(form.pokemon.toLowerCase());
     
     if (pokemon) {
         clearNotifications();
@@ -28,6 +35,16 @@ async function handleFormSubmit(event) {
     }
 }
 
+function nextPokemon() {
+    // https://pokeapi.co/api/v2/pokemon/?offset=1007&limit=1
+
+    /* .next
+        results[n].url // el actual en esta página
+
+        if .next === null // No hay próximo
+        if .previous === null // No hay previo
+        .previous = query de la pagina anterior  */
+}
 
 async function getPokemonByName(name) {
     notifyUser('Buscando...', 'toast-info');
@@ -48,6 +65,18 @@ function displayPokemon(pokemon) {
     pokeImgElement.setAttribute('title', pokemon.forms[0].name);
 
     dataCardElement.classList.remove('hidden');
+
+    // buttons
+
+    prevButton.disabled = false;
+    nextButton.disabled = false;
+
+    if (pokemon.id === 1) {
+        prevButton.disabled = true;
+    }
+    if (pokemon.id === lastPokemonIndex) {
+        nextButton.disabled = true;
+    }
 } 
 
 function clearResults(){

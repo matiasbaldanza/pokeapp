@@ -11,7 +11,7 @@
 </head>
 <body>
     <main>
-        <h1>Pokemon APP</h1>
+        <h1>Pokemon Search</h1>
         <form search-form action="submit">
             <label for="search">
                 <input search-input type="text" name="pokemon" autocomplete="off">
@@ -22,9 +22,13 @@
         <div data-notifications class="notifications hidden">
             <p data-toast></p>
         </div>
-        <div data-card class="hidden">
-            <p poke-name></p>
-            <img poke-img>
+        <div data-card class="data-card hidden">
+            <button btn-prev>&lt;</button>
+            <div class="poke-data">
+                <p poke-name></p>
+                <img poke-img>
+            </div>
+            <button btn-next>&gt;</button>
         </div>
     </main>
 </body>

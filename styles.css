@@ -4,6 +4,12 @@ main {
     text-align: center;
 }
 
+.data-card {
+    min-width: 400px;
+    display: flex;
+    justify-content: space-between;
+}
+
 .notifications {
     margin: 0 auto;
     margin-top: 1rem;
