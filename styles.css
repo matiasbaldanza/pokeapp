@@ -3,3 +3,30 @@ main {
     max-width: 700px;
     text-align: center;
 }
+
+.notifications {
+    margin: 0 auto;
+    margin-top: 1rem;
+    padding: 0.5rem;
+    max-width: 400px;
+    transition: opacity 200ms ease-in;
+}
+
+.notifications > * {
+    margin: 0;
+    padding: 0;
+}
+
+.hidden { 
+    opacity: 0;
+}
+
+.toast-info {
+    background-color: lightgreen;
+    border-left: 4px solid green;
+}
+
+.toast-error {
+    background-color: lightcoral;
+    border-left: 4px solid crimson;
+}
