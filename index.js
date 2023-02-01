@@ -1,3 +1,23 @@
+// ERROR HANDLING
+class ResponseError extends Error {
+    constructor(message, response) {
+        super(message);
+        this.response = response;
+    }
+}
+
+function handleError(error, queryParams) {
+    switch (error.response.status) {
+        case 404: 
+            notifyUser(`${queryParams} no fue encontrado.`, 'toast-error'); 
+            break;
+        case 598: case 599: case 500: case 429:
+            notifyUser(`Error de red. Intente más tarde.`, 'toast-error'); 
+            break;
+        default: notifyUser(`🔥 Error inesperado. Everything is fine... 🔥`, 'toast-error'); 
+    }
+}
+
 // DOM elements
 const dataCardElement = document.querySelector('[data-card]');
 const searchForm = document.querySelector('[search-form]');
@@ -17,9 +37,8 @@ const lastPokemonIndex = async function() { }
 
 // event listeners
 searchForm.addEventListener('submit', handleFormSubmit );
-prevButton.addEventListener('click', prevPokemon );
-nextButton.addEventListener('click', nextPokemon );
-
+// prevButton.addEventListener('click', prevPokemon );
+// nextButton.addEventListener('click', nextPokemon );
 
 async function handleFormSubmit(event) {
     event.preventDefault();
@@ -78,15 +97,6 @@ function clearResults(){
     dataCardElement.classList.add('hidden');
 }
 
-// ERROR HANDLING
-
-class ResponseError extends Error {
-    constructor(message, response) {
-        super(message);
-        this.response = response;
-    }
-}
-
 // FETCH
 
 async function myFetch(...options) {
@@ -105,19 +115,9 @@ async function fetchFromAPI(resource, queryParams) {
         data = await response.json();
         return data;
     } catch(error) {
-        switch (error.response.status) {
-            case 404: 
-                notifyUser(`${queryParams} no fue encontrado.`, 'toast-error'); 
-                break;
-            case 598: case 599: case 500: case 429:
-                notifyUser(`Error de red. Intente más tarde.`, 'toast-error'); 
-            break;
-            default: notifyUser(`🔥 Error inesperado. Everything is fine... 🔥`, 'toast-error'); 
-        }
+        handleError(error, queryParams);
     }
 }
-
-
 
 // NOTIFICATIONS
 
