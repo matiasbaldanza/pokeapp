@@ -48,13 +48,8 @@ function nextPokemon() {
 
 async function getPokemonByName(name) {
     notifyUser('Buscando...', 'toast-info');
-    const pokemon = await fetchPokemon(name);
+    const pokemon = await fetchFromAPI('pokemon', name);
     return pokemon;
-}
-
-async function getPokemonByID(id) {
-    const pokemon = await fetchPokemon(String(id));
-    return pokemon
 }
 
 function displayPokemon(pokemon) {
@@ -102,8 +97,8 @@ async function myFetch(...options) {
     return response;
 }
 
-async function fetchPokemon(queryParams) {
-    requestURL.pathname = `${prefixURL}pokemon/${queryParams}`;
+async function fetchFromAPI(resource, queryParams) {
+    requestURL.pathname = `${prefixURL}${resource}/${queryParams}`;
     let data = ''; 
     try {
         const response = await myFetch(requestURL);
@@ -121,6 +116,8 @@ async function fetchPokemon(queryParams) {
         }
     }
 }
+
+
 
 // NOTIFICATIONS
 
